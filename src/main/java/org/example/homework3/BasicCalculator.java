@@ -15,7 +15,5 @@ public class BasicCalculator {
         System.out.println("The subtraction result is: " + subtrct);
         System.out.println("The multiplication result is: " + multip);
         System.out.println("The division result is: " + division);
-
-
     }
 }

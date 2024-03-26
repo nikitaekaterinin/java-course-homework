@@ -7,8 +7,5 @@ public class LongToInt {
 
         System.out.println("The original long value is: " + a);
         System.out.println("The converted to int value is: " + b);
-
-
-
     }
 }

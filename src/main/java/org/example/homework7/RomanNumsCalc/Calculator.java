@@ -19,11 +19,16 @@ public class Calculator {
                 result = first * second;
                 break;
             case "/":
-                result = first / second;
+                if (second != 0) {
+                    result = first / second;
+                } else {
+                    System.out.println("Error: division by zero.");
+                }
                 break;
             default:
                 System.out.println("Invalid operation.");
         }
+
         return result;
     }
 }

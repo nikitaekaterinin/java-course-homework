@@ -19,12 +19,13 @@ public class StringManipulator {
 
         outerLoop:
         for (int i = 0; i < initialString.length(); i++) {
+            char currentChar = initialString.charAt(i);
             for (int j = 0; j < charsToRemove.length; j++) {
-                if (initialString.charAt(i) == charsToRemove[j]) {
+                if (currentChar == charsToRemove[j]) {
                     continue outerLoop;
                 }
             }
-            sb.append(initialString.charAt(i));
+            sb.append(currentChar);
         }
         return sb.toString();
     }

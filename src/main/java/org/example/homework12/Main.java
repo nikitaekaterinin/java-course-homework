@@ -1,8 +1,8 @@
 package org.example.homework12;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -11,7 +11,7 @@ public class Main {
         students.add(new Student("Kate", 20, 100));
         students.add(new Student("Tim", 21, 90));
         students.add(new Student("Artie", 22, 56));
-        students.add(new Student("Tamara", 23, 100));
+        students.add(new Student("Tamara", 23, 93));
         students.add(new Student("Izabella", 19, 98));
         students.add(new Student("Sam", 25, 50));
 
@@ -26,7 +26,7 @@ public class Main {
 
         System.out.println("Average student's grade is: " + calculateAvgGrade(students) + "\n");
 
-        System.out.println("The name of students with highest score is: " + studentsWithHighestGrade(students) + "\n");
+        System.out.println("The student with highest score is: " + studentsWithHighestGrade(students) + "\n");
 
         System.out.println("Count of students who has grade lower than 60: " + countLowGradeStudents(students));
 
@@ -62,16 +62,10 @@ public class Main {
                 .orElse(0.0);
     }
 
-    public static String studentsWithHighestGrade(List<Student> students) {
-        int maxGrade = students.stream()
-                .mapToInt(Student::getGrade)
-                .max()
-                .orElseThrow();
-
+    public static Student studentsWithHighestGrade(List<Student> students) {
         return students.stream()
-                .filter(student -> student.getGrade() == maxGrade)
-                .map(Student::getName)
-                .collect(Collectors.joining(", "));
+                .max(Comparator.comparingInt(Student::getGrade))
+                .orElseThrow();
     }
 
     public static int countLowGradeStudents(List<Student> students) {

@@ -1,4 +1,5 @@
 package org.example.homework10.Employee;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -23,36 +24,44 @@ public class Main {
     }
 
     public static void printOrderedList(List<Employee> list, String param) {
-        LocalEmployee localEmployee = new LocalEmployee();
+        class LocalEmployee {
+            private final Employee emp;
 
-        Comparator<Employee> comparator = null;
-        switch (param) {
-            case "name":
-                comparator = Comparator.comparing(emp -> localEmployee.fullName(emp));
-                break;
-            case "year":
-                comparator = Comparator.comparingInt(emp -> localEmployee.yearsWorked(emp));
-                break;
-            default:
-                throw new IllegalArgumentException("Unknown sorting parameter: " + param);
+            public LocalEmployee(Employee emp) {
+                this.emp = emp;
+            }
+
+            public int yearsWorked() {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                LocalDate hireDate = LocalDate.parse(emp.hireDate(), formatter);
+                return LocalDate.now().getYear() - hireDate.getYear();
+            }
+
+            public String fullName() {
+                return emp.firstName() + " " + emp.lastName();
+            }
         }
+
+        Comparator<Employee> comparator = new Comparator<>() {
+            @Override
+            public int compare(Employee emp1, Employee emp2) {
+                LocalEmployee localEmployee1 = new LocalEmployee(emp1);
+                LocalEmployee localEmployee2 = new LocalEmployee(emp2);
+                if ("name".equals(param)) {
+                    return localEmployee1.fullName().compareTo(localEmployee2.fullName());
+                } else if ("year".equals(param)) {
+                    return Integer.compare(localEmployee1.yearsWorked(), localEmployee2.yearsWorked());
+                } else {
+                    throw new IllegalArgumentException("Unknown sorting parameter: " + param);
+                }
+            }
+        };
 
         list.sort(comparator);
 
         for (Employee emp : list) {
-            System.out.println(localEmployee.fullName(emp) + " - Years worked: " + localEmployee.yearsWorked(emp));
-        }
-    }
-
-    static class LocalEmployee {
-        public int yearsWorked(Employee emp) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-            LocalDate hireDate = LocalDate.parse(emp.hireDate, formatter);
-            return LocalDate.now().getYear() - hireDate.getYear();
-        }
-
-        public String fullName(Employee emp) {
-            return emp.firstName + " " + emp.lastName;
+            LocalEmployee localEmployee = new LocalEmployee(emp);
+            System.out.println(localEmployee.fullName() + " - Years worked: " + localEmployee.yearsWorked());
         }
     }
 

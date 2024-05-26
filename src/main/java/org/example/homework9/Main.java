@@ -19,7 +19,7 @@ public class Main {
 
         mobilePhone.removeContact(cont1);
 
-        mobilePhone.updateContact(cont2, cont4);
+       mobilePhone.updateContact(cont2, cont4);
 
         mobilePhone.queryContact("Max");
 

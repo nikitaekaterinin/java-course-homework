@@ -13,19 +13,19 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class StringUtilsTests {
     @Test
     @Tag("1st")
-    @DisplayName("Check user's email basic correctness")
+    @DisplayName("Check string correctness")
     void checkEmail() {
-        String userEmail = "kateryna.test@gmail.com";
+        String sample = "Liverpool";
 
-        assertTrue(StringUtils.isNoneEmpty(userEmail));
-        assertTrue(StringUtils.contains(userEmail, '@'));
-        assertTrue(StringUtils.endsWith(userEmail, ".com"));
+        assertTrue(StringUtils.isNoneEmpty(sample));
+        assertTrue(StringUtils.contains(sample, 'i'));
+        assertTrue(StringUtils.endsWith(sample, "ool"));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"Andy", "Anna", "Albul"})
     @Tag("2nd")
-    @DisplayName("Check that all user's name start with A")
+    @DisplayName("Check that the name start with A")
     void checkUserNames(String str) {
         assertTrue(StringUtils.startsWithIgnoreCase(str, "A"));
     }

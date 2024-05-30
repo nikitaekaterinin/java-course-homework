@@ -5,7 +5,6 @@ import org.example.homework13.Card;
 import org.example.homework13.Rank;
 import org.example.homework13.Suit;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,7 +14,6 @@ class BlackJackHandTest {
 
     @Test
     @DisplayName("Check adding and getting cards from hand")
-    @Tag("HandClassTest")
     void getCards() {
         BlackJackHand hand = new BlackJackHand();
         Card card1 = new Card(Suit.HEARTS, Rank.ACE);
@@ -31,7 +29,6 @@ class BlackJackHandTest {
 
     @Test
     @DisplayName("Check getting card value")
-    @Tag("HandClassTest")
     void getValue() {
         BlackJackHand hand = new BlackJackHand();
         hand.addCard(new Card(Suit.HEARTS, Rank.FIVE));
@@ -41,7 +38,6 @@ class BlackJackHandTest {
 
     @Test
     @DisplayName("Check is hand busted")
-    @Tag("HandClassTest")
     void isBusted() {
         BlackJackHand hand = new BlackJackHand();
         hand.addCard(new Card(Suit.HEARTS, Rank.TEN));
@@ -53,7 +49,6 @@ class BlackJackHandTest {
 
     @Test
     @DisplayName("Check is blackJack or not")
-    @Tag("HandClassTest")
     void isBlackJack() {
         BlackJackHand hand = new BlackJackHand();
         hand.addCard(new Card(Suit.HEARTS, Rank.ACE));
@@ -64,9 +59,8 @@ class BlackJackHandTest {
     }
 
     @Test
-    @DisplayName("Check correct sum of cards calculation")
-    @Tag("HandClassTest")
-        void checkCardsSum() {
+    @DisplayName("Check sum of cards with faces")
+    void testSumFaceCards() {
         BlackJackHand hand = new BlackJackHand();
         hand.addCard(new Card(Suit.HEARTS, Rank.JACK));
         hand.addCard(new Card(Suit.CLUBS, Rank.QUEEN));
@@ -76,12 +70,64 @@ class BlackJackHandTest {
     }
 
     @Test
+    @DisplayName("Check sum of different card types")
+    void testSumDiffCards() {
+        BlackJackHand hand = new BlackJackHand();
+        hand.addCard(new Card(Suit.HEARTS, Rank.ACE));
+        hand.addCard(new Card(Suit.CLUBS, Rank.KING));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.FIVE));
+
+        assertEquals(16, hand.getValue());
+    }
+
+    @Test
+    @DisplayName("Check sum of all Aces")
+    void testAcesSum() {
+        BlackJackHand hand = new BlackJackHand();
+        hand.addCard(new Card(Suit.HEARTS, Rank.ACE));
+        hand.addCard(new Card(Suit.CLUBS, Rank.ACE));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.ACE));
+        hand.addCard(new Card(Suit.SPADES, Rank.ACE));
+
+        assertEquals(14, hand.getValue());
+    }
+
+    @Test
+    @DisplayName("Check sum of different simple cards")
+    void testHandWithNumericCards() {
+        BlackJackHand hand = new BlackJackHand();
+        hand.addCard(new Card(Suit.HEARTS, Rank.TWO));
+        hand.addCard(new Card(Suit.SPADES, Rank.THREE));
+        hand.addCard(new Card(Suit.DIAMONDS, Rank.FOUR));
+        hand.addCard(new Card(Suit.CLUBS, Rank.FIVE));
+
+        assertEquals(14, hand.getValue());
+    }
+
+    @Test
+    @DisplayName("Check the empty hand")
+    void testEmptyHand() {
+        BlackJackHand hand = new BlackJackHand();
+        hand.addCard(new Card(Suit.HEARTS, Rank.ACE));
+
+        assertEquals(11, hand.getValue());
+    }
+
+    @Test
+    @DisplayName("Check single ace value")
+    void testSingleAce() {
+        BlackJackHand hand = new BlackJackHand();
+
+        assertEquals(0, hand.getValue());
+    }
+
+    @Test
     @DisplayName("Check Hand toString method")
-    @Tag("HandClassTest")
     void testToString() {
         BlackJackHand hand = new BlackJackHand();
         hand.addCard(new Card(Suit.HEARTS, Rank.QUEEN));
-
-        assertEquals("[QUEEN of HEARTS]", hand.toString());
+        hand.addCard(new Card(Suit.CLUBS, Rank.KING));
+        hand.addCard(new Card(Suit.HEARTS, Rank.JACK));
+        assertEquals("[QUEEN of HEARTS, KING of CLUBS, JACK of HEARTS]", hand.toString());
     }
 }
